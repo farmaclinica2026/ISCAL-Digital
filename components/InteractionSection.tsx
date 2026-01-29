@@ -1,93 +1,16 @@
 
-import React, { useState } from 'react';
-import { RefreshCw, Home, Search, ExternalLink, AlertTriangle, Info, Loader2, CheckCircle } from 'lucide-react';
-import { GoogleGenAI, Type } from "@google/genai";
-import InteractionResultCard from './InteractionResultCard';
-
-interface Interaction {
-  drugs: string[];
-  severity: string;
-  effect: string;
-  reason: string;
-}
+import React from 'react';
+import { RefreshCw, Home, ExternalLink, AlertTriangle } from 'lucide-react';
 
 interface InteractionSectionProps {
   onBack: () => void;
 }
 
 const InteractionSection: React.FC<InteractionSectionProps> = ({ onBack }) => {
-  const [drugs, setDrugs] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<Interaction[] | string | null>(null);
-
-  const handleSearch = async () => {
-    if (!drugs.trim()) return;
-    setLoading(true);
-    setResult(null);
-
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const prompt = `Aja como um farmacêutico clínico sênior e especialista em interações medicamentosas. Sua base de conhecimento inclui dados de fontes de referência mundial como Drugs.com, IBM Micromedex, Cerner Multum, American Society of Health-System Pharmacists (ASHP), FDA e Mayo Clinic.
-Para os fármacos a seguir: ${drugs}.
-1. Traduza os nomes para o inglês para a busca.
-2. Analise as interações e filtre APENAS as classificadas como 'Major' (Grave).
-3. Para cada interação grave, retorne os seguintes dados em um JSON:
-   - 'drugs': uma lista com os nomes dos fármacos que interagem em português.
-   - 'severity': o nível de gravidade, que será 'Grave'.
-   - 'effect': uma descrição clara do efeito clínico que a interação pode causar.
-   - 'reason': um resumo do motivo da gravidade, focado no risco clínico principal.
-Se não encontrar interações graves, retorne um JSON com uma lista 'interactions' vazia.`;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: prompt,
-        config: {
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: Type.OBJECT,
-            properties: {
-              interactions: {
-                type: Type.ARRAY,
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    drugs: { type: Type.ARRAY, items: { type: Type.STRING } },
-                    severity: { type: Type.STRING },
-                    effect: { type: Type.STRING },
-                    reason: { type: Type.STRING },
-                  },
-                  required: ["drugs", "severity", "effect", "reason"]
-                }
-              }
-            },
-            required: ["interactions"]
-          }
-        },
-      });
-
-      try {
-        const data = JSON.parse(response.text);
-        if (data.interactions && data.interactions.length > 0) {
-          setResult(data.interactions);
-        } else {
-          setResult("Nenhuma interação grave encontrada entre os medicamentos pesquisados.");
-        }
-      } catch (parseError) {
-        console.error("JSON parsing error:", parseError);
-        setResult("A resposta da IA não pôde ser processada. Verifique a formatação do resultado.");
-      }
-    } catch (error) {
-      console.error(error);
-      setResult('Erro ao consultar a base de dados. Por favor, tente novamente.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex i-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
             <RefreshCw className="w-5 h-5 text-indigo-600" />
@@ -107,99 +30,51 @@ Se não encontrar interações graves, retorne um JSON com uma lista 'interactio
       </div>
 
       {/* Drugs.com Access Card */}
-      <div className="bg-indigo-600 rounded-2xl p-5 text-white shadow-lg mb-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-4 opacity-10">
-          <ExternalLink className="w-20 h-20 rotate-12" />
-        </div>
-        <div className="relative z-10 flex items-center justify-between">
-          <h3 className="font-bold flex items-center gap-2">
-            <ExternalLink className="w-5 h-5" /> Base de Referência
-          </h3>
+      <div className="bg-indigo-600 rounded-3xl p-8 text-white shadow-xl mb-12 relative overflow-hidden group">
+        <div className="absolute top-[-20px] right-[-20px] w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:bg-white/15 transition-colors"></div>
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
+              <ExternalLink className="w-8 h-8 text-white" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold">Base de Referência</h3>
+              <p className="text-indigo-100 text-sm">Drugs.com Knowledge Base</p>
+            </div>
+          </div>
+          
+          <p className="text-indigo-50 mb-8 text-sm leading-relaxed max-w-md">
+            Para garantir a segurança do paciente e a precisão clínica, utilize a ferramenta de interações medicamentosas do Drugs.com.
+          </p>
+
           <a 
             href="https://www.drugs.com/drug_interactions.html" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-white/20 hover:bg-white/30 transition-colors text-white py-2 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border border-white/30"
+            className="inline-flex items-center justify-center gap-3 bg-white text-indigo-700 hover:bg-indigo-50 transition-all py-4 px-8 rounded-2xl text-sm font-extrabold shadow-lg hover:shadow-indigo-500/20 active:scale-95 w-full sm:w-auto"
           >
-            Validar no Drugs.com <ExternalLink className="w-4 h-4" />
+            Acessar Verificador Drugs.com <ExternalLink className="w-5 h-5" />
           </a>
         </div>
       </div>
 
-      {/* Search Input */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
-        <label className="block text-sm font-bold text-gray-700 mb-2">Análise por IA ISCAL</label>
-        <div className="flex flex-col gap-3">
-          <div className="relative">
-            <textarea
-              className="w-full p-4 pr-12 border border-gray-300 rounded-xl min-h-[100px] focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-sm leading-relaxed"
-              placeholder="Digite os fármacos separados por vírgula. Ex: Varfarina, AAS, Clopidogrel"
-              value={drugs}
-              onChange={(e) => setDrugs(e.target.value)}
-            />
-            <div className="absolute top-4 right-4">
-              <RefreshCw className={`w-5 h-5 text-gray-300 ${loading ? 'animate-spin' : ''}`} />
-            </div>
-          </div>
-          <button
-            onClick={handleSearch}
-            disabled={loading || !drugs.trim()}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 text-white py-4 rounded-xl font-bold transition-all shadow-md flex items-center justify-center gap-2"
-          >
-            {loading ? <Loader2 className="w-5 h-5 animate-pulse" /> : <Search className="w-5 h-5" />}
-            {loading ? 'Analisando Interações...' : 'Analisar Conflitos'}
-          </button>
-        </div>
-      </div>
-
-      {/* Result Display */}
-      {result && (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 animate-in fade-in slide-in-from-top-2 duration-300">
-          <div className="flex items-center gap-2 mb-4">
-            {typeof result === 'string' ? (
-                 <CheckCircle className="w-5 h-5 text-green-600" />
-            ) : (
-                <AlertTriangle className="w-5 h-5 text-red-600" />
-            )}
-            <h3 className="font-bold text-gray-800">
-                {typeof result === 'string' ? 'Análise Concluída' : 'Análise de Interações Graves'}
-            </h3>
-          </div>
-          
-          <div className="space-y-4">
-            {typeof result === 'string' ? (
-              <p className="text-sm text-gray-600">{result}</p>
-            ) : (
-              result.map((interaction, index) => (
-                <InteractionResultCard key={interaction.drugs.join('-') + index} interaction={interaction} />
-              ))
-            )}
-          </div>
-          
-          <div className="mt-6 pt-4 border-t border-gray-100 flex items-start gap-3 bg-slate-50 p-4 rounded-xl">
-            <Info className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-            <p className="text-[10px] text-gray-500 leading-tight">
-              Aviso: Esta análise é gerada por inteligência artificial e deve ser validada no Drugs.com ou por um farmacêutico clínico. Não substitui o julgamento profissional.
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Footer Disclaimer */}
       <div className="mt-10 pt-6 border-t border-gray-200">
-        <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 flex items-start gap-4 shadow-sm">
+            <AlertTriangle className="w-6 h-6 text-yellow-600 mt-0.5 flex-shrink-0" />
             <div>
-              <h4 className="text-sm font-bold text-yellow-800">Aviso Importante</h4>
-              <p className="mt-1 text-xs text-yellow-900 leading-relaxed">
-                Os resultados encontrados são de uma base de dados externa, não sendo um canal oficial da instituição.
+              <h4 className="text-sm font-bold text-yellow-800 uppercase tracking-wide mb-2">Aviso Importante</h4>
+              <p className="text-xs text-yellow-900 leading-relaxed mb-3">
+                Os resultados de interações medicamentosas são fornecidos por uma base de dados externa (Drugs.com), não sendo um canal gerido pela instituição.
               </p>
-              <p className="mt-2 text-xs text-yellow-900 leading-relaxed">
-                Esta ferramenta utiliza a base de dados do site Drugs.com apenas como referência para pesquisa.
+              <p className="text-xs text-yellow-900 leading-relaxed font-medium">
+                Esta ferramenta serve apenas como referência para pesquisa e apoio à decisão clínica. O julgamento do profissional de saúde prevalece sobre qualquer dado automatizado.
               </p>
-              <p className="mt-2 text-[10px] text-yellow-800/80 leading-relaxed">
-                As informações são baseadas em dados de fontes como: IBM Micromedex, Cerner Multum, American Society of Health-System Pharmacists (ASHP), FDA (órgão regulador de medicamentos dos EUA) e Mayo Clinic.
-              </p>
+              <div className="mt-4 pt-4 border-t border-yellow-200">
+                <p className="text-[10px] text-yellow-800/80 leading-relaxed">
+                  As informações do Drugs.com são baseadas em dados de fontes globais como: IBM Micromedex, Cerner Multum, ASHP, FDA e Mayo Clinic.
+                </p>
+              </div>
             </div>
         </div>
       </div>
