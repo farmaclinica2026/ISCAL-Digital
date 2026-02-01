@@ -384,7 +384,7 @@ export const protocols: Protocol[] = [
   {
     id: 'neuro-2',
     category: 'Neurológica',
-    procedure: 'Laminectomia or outras cirurgias de coluna com implantes ou se cirurgia longa / vários níveis',
+    procedure: 'Laminectomia or outras cirurgias de coluna with implantes ou se cirurgia longa / vários níveis',
     antibiotic: 'Cefuroxima',
     inductionDose: '1,5g',
     intraOp: '750mg 4/4h',
@@ -1009,14 +1009,15 @@ export const categoryNotes: Record<string, string> = {
 };
 
 /**
- * Pediatric dose data as required by PediatricSection.tsx
+ * Pediatric surgical prophylaxis doses.
+ * Values are based on weight-based calculations for pediatric patients.
  */
 export const pediatricDoses = [
-  { drug: 'Cefazolina', dose: '30-50 mg/kg (máx 2g)' },
-  { drug: 'Cefoxitina', dose: '30-40 mg/kg (máx 2g)' },
-  { drug: 'Cefuroxima', dose: '50 mg/kg (máx 1,5g)' },
-  { drug: 'Metronidazol', dose: '15 mg/kg (máx 500mg)' },
-  { drug: 'Clindamicina', dose: '10 mg/kg (máx 600-900mg)' },
-  { drug: 'Gentamicina', dose: '5 mg/kg' },
-  { drug: 'Vancomicina', dose: '15 mg/kg (máx 1g)' },
+  { drug: 'Cefazolina', dose: '30-50 mg/kg (Máximo: 2g)' },
+  { drug: 'Cefoxitina', dose: '40 mg/kg (Máximo: 2g)' },
+  { drug: 'Cefuroxima', dose: '50 mg/kg (Máximo: 1,5g)' },
+  { drug: 'Clindamicina', dose: '10 mg/kg (Máximo: 600-900mg)' },
+  { drug: 'Gentamicina', dose: '5 mg/kg (Dose única)' },
+  { drug: 'Metronidazol', dose: '15 mg/kg (Máximo: 500mg)' },
+  { drug: 'Vancomicina', dose: '15 mg/kg (Máximo: 1g)' },
 ];

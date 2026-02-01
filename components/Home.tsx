@@ -52,19 +52,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </p>
           </button>
 
-          {/* Módulo Interação Medicamentosa */}
-          <button 
-            onClick={() => onNavigate('interactions')}
-            className="flex flex-col items-center justify-start p-2 rounded-xl hover:bg-indigo-50 transition-colors group"
-          >
-            <div className="w-16 h-16 border-2 border-indigo-600/80 rounded-2xl flex items-center justify-center transform transition-transform duration-200 group-hover:scale-105">
-              <RefreshCw className="w-8 h-8 text-indigo-600/80" />
-            </div>
-            <p className="h-14 flex items-center justify-center text-center text-[10px] font-bold text-gray-700 mt-2 leading-tight uppercase">
-              Interação<br/>Medicamentosa
-            </p>
-          </button>
-
           {/* Módulo Gasometria */}
           <button 
             onClick={() => onNavigate('gasometry')}
@@ -78,6 +65,19 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </p>
           </button>
 
+          {/* Módulo Interações */}
+          <button 
+            onClick={() => onNavigate('interactions')}
+            className="flex flex-col items-center justify-start p-2 rounded-xl hover:bg-indigo-50 transition-colors group"
+          >
+            <div className="w-16 h-16 border-2 border-indigo-600/80 rounded-2xl flex items-center justify-center transform transition-transform duration-200 group-hover:scale-105">
+              <RefreshCw className="w-8 h-8 text-indigo-600/80" />
+            </div>
+            <p className="h-14 flex items-center justify-center text-center text-[10px] font-bold text-gray-700 mt-2 leading-tight uppercase">
+              Interações<br/>Medicamentosas
+            </p>
+          </button>
+          
           {/* Placeholder Em Construção */}
           <div className="flex flex-col items-center justify-start p-2 rounded-xl">
              <div className="w-16 h-16 border-2 border-dashed border-gray-300 rounded-2xl flex items-center justify-center">

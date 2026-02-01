@@ -10,14 +10,14 @@ const InteractionSection: React.FC<InteractionSectionProps> = ({ onBack }) => {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
       {/* Header */}
-      <div className="flex i-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
             <RefreshCw className="w-5 h-5 text-indigo-600" />
           </div>
           <div>
             <h2 className="text-sm font-bold text-indigo-700 uppercase leading-tight">Interação Medicamentosa</h2>
-            <p className="text-[10px] text-gray-400 font-medium uppercase">Verificador de Conflitos</p>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Verificador de Conflitos</p>
           </div>
         </div>
         <button 
@@ -38,13 +38,13 @@ const InteractionSection: React.FC<InteractionSectionProps> = ({ onBack }) => {
               <ExternalLink className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-bold">Base de Referência</h3>
+              <h3 className="text-xl font-bold tracking-tight">Base de Referência Global</h3>
               <p className="text-indigo-100 text-sm">Drugs.com Knowledge Base</p>
             </div>
           </div>
           
-          <p className="text-indigo-50 mb-8 text-sm leading-relaxed max-w-md">
-            Para garantir a segurança do paciente e a precisão clínica, utilize a ferramenta de interações medicamentosas do Drugs.com.
+          <p className="text-indigo-50 mb-8 text-sm leading-relaxed max-w-md font-medium">
+            Para garantir a máxima segurança do paciente, utilize a base de dados do Drugs.com, referência mundial em interações farmacológicas.
           </p>
 
           <a 
@@ -58,21 +58,21 @@ const InteractionSection: React.FC<InteractionSectionProps> = ({ onBack }) => {
         </div>
       </div>
 
-      {/* Footer Disclaimer */}
+      {/* Aviso Importante */}
       <div className="mt-10 pt-6 border-t border-gray-200">
-        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 flex items-start gap-4 shadow-sm">
-            <AlertTriangle className="w-6 h-6 text-yellow-600 mt-0.5 flex-shrink-0" />
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 flex items-start gap-4 shadow-sm">
+            <AlertTriangle className="w-6 h-6 text-amber-600 mt-0.5 flex-shrink-0" />
             <div>
-              <h4 className="text-sm font-bold text-yellow-800 uppercase tracking-wide mb-2">Aviso Importante</h4>
-              <p className="text-xs text-yellow-900 leading-relaxed mb-3">
-                Os resultados de interações medicamentosas são fornecidos por uma base de dados externa (Drugs.com), não sendo um canal gerido pela instituição.
+              <h4 className="text-sm font-bold text-amber-800 uppercase tracking-wide mb-2">Aviso de Isenção</h4>
+              <p className="text-xs text-amber-900 leading-relaxed mb-3">
+                Os resultados de interações medicamentosas são fornecidos por uma base de dados externa e independente. A ISCAL não gere as informações do Drugs.com.
               </p>
-              <p className="text-xs text-yellow-900 leading-relaxed font-medium">
-                Esta ferramenta serve apenas como referência para pesquisa e apoio à decisão clínica. O julgamento do profissional de saúde prevalece sobre qualquer dado automatizado.
+              <p className="text-xs text-amber-900 leading-relaxed font-bold">
+                O julgamento clínico do profissional de saúde deve prevalecer sobre qualquer dado automatizado.
               </p>
-              <div className="mt-4 pt-4 border-t border-yellow-200">
-                <p className="text-[10px] text-yellow-800/80 leading-relaxed">
-                  As informações do Drugs.com são baseadas em dados de fontes globais como: IBM Micromedex, Cerner Multum, ASHP, FDA e Mayo Clinic.
+              <div className="mt-4 pt-4 border-t border-amber-200">
+                <p className="text-[10px] text-amber-800/80 leading-relaxed">
+                  Referência: IBM Micromedex, Cerner Multum, ASHP, FDA e Mayo Clinic via Drugs.com.
                 </p>
               </div>
             </div>

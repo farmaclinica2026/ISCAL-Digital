@@ -22,4 +22,4 @@ export interface RenalDose {
   notes?: string;
 }
 
-export type AppView = 'home' | 'prophylaxis' | 'renal' | 'interactions' | 'gasometry';
+export type AppView = 'home' | 'prophylaxis' | 'renal' | 'gasometry' | 'interactions';
