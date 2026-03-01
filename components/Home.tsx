@@ -24,7 +24,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
       {/* Grid de Botões */}
       <main className="max-w-md mx-auto px-6 -mt-20 relative z-20 w-full">
-        <div className="grid grid-cols-3 gap-4 bg-white p-4 rounded-3xl shadow-lg border border-gray-100">
+        <div className="grid grid-cols-2 gap-4 bg-white p-4 rounded-3xl shadow-lg border border-gray-100">
           
           {/* Módulo Profilaxia */}
           <button 
@@ -51,52 +51,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               Ajuste Renal de<br/>Antimicrobianos
             </p>
           </button>
-
-          {/* Módulo Gasometria */}
-          <button 
-            onClick={() => onNavigate('gasometry')}
-            className="flex flex-col items-center justify-start p-2 rounded-xl hover:bg-orange-50 transition-colors group"
-          >
-            <div className="w-16 h-16 border-2 border-orange-600/80 rounded-2xl flex items-center justify-center transform transition-transform duration-200 group-hover:scale-105">
-              <Droplets className="w-8 h-8 text-orange-600/80" />
-            </div>
-            <p className="h-14 flex items-center justify-center text-center text-[10px] font-bold text-gray-700 mt-2 leading-tight uppercase">
-              Análise de<br/>Gasometria
-            </p>
-          </button>
-
-          {/* Módulo Interações */}
-          <button 
-            onClick={() => onNavigate('interactions')}
-            className="flex flex-col items-center justify-start p-2 rounded-xl hover:bg-indigo-50 transition-colors group"
-          >
-            <div className="w-16 h-16 border-2 border-indigo-600/80 rounded-2xl flex items-center justify-center transform transition-transform duration-200 group-hover:scale-105">
-              <RefreshCw className="w-8 h-8 text-indigo-600/80" />
-            </div>
-            <p className="h-14 flex items-center justify-center text-center text-[10px] font-bold text-gray-700 mt-2 leading-tight uppercase">
-              Interações<br/>Medicamentosas
-            </p>
-          </button>
-          
-          {/* Placeholder Em Construção */}
-          <div className="flex flex-col items-center justify-start p-2 rounded-xl">
-             <div className="w-16 h-16 border-2 border-dashed border-gray-300 rounded-2xl flex items-center justify-center">
-              <Lock className="w-7 h-7 text-gray-400" />
-            </div>
-            <p className="h-14 flex items-center justify-center text-center text-[10px] font-bold text-gray-400 mt-2 leading-tight uppercase">
-              Em Breve
-            </p>
-          </div>
-          
-          {/* Placeholder Em Construção */}
-          <div className="flex flex-col items-center justify-start p-2 rounded-xl">
-             <div className="w-16 h-16 border-2 border-dashed border-gray-300 rounded-2xl flex items-center justify-center">
-              <Lock className="w-7 h-7 text-gray-400" />
-            </div>
-            <p className="h-14 flex items-center justify-center text-center text-[10px] font-bold text-gray-400 mt-2 leading-tight uppercase">
-              Em Breve
-            </p>
-          </div>
         </div>
 
         {/* Info Card */}

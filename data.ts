@@ -1008,16 +1008,3 @@ export const categoryNotes: Record<string, string> = {
   'Vascular': 'Obs.: Se paciente internado há mais de 5 dias realizar como antibiótico profilático Teicoplanina 6mg/Kg/dia.'
 };
 
-/**
- * Pediatric surgical prophylaxis doses.
- * Values are based on weight-based calculations for pediatric patients.
- */
-export const pediatricDoses = [
-  { drug: 'Cefazolina', dose: '30-50 mg/kg (Máximo: 2g)' },
-  { drug: 'Cefoxitina', dose: '40 mg/kg (Máximo: 2g)' },
-  { drug: 'Cefuroxima', dose: '50 mg/kg (Máximo: 1,5g)' },
-  { drug: 'Clindamicina', dose: '10 mg/kg (Máximo: 600-900mg)' },
-  { drug: 'Gentamicina', dose: '5 mg/kg (Dose única)' },
-  { drug: 'Metronidazol', dose: '15 mg/kg (Máximo: 500mg)' },
-  { drug: 'Vancomicina', dose: '15 mg/kg (Máximo: 1g)' },
-];

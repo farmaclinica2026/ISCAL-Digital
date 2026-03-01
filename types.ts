@@ -15,11 +15,13 @@ export type TabType = 'adults' | 'guidelines';
 
 export interface RenalDose {
   drug: string;
+  category?: 'antibiotic' | 'antifungal' | 'antiviral';
+  attackDose?: string;
   normalDose: string;
-  crcl10_50: string;
-  crcl_10: string;
+  crcl30_50: string;
+  crcl_30: string;
   dialysis: string;
   notes?: string;
 }
 
-export type AppView = 'home' | 'prophylaxis' | 'renal' | 'gasometry' | 'interactions';
+export type AppView = 'home' | 'prophylaxis' | 'renal';
