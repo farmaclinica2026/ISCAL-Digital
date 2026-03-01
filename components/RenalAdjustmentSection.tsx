@@ -270,6 +270,35 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
           Os ajustes sugeridos são baseados em guias de referência. A decisão clínica deve considerar o estado volêmico, gravidade da infecção e monitorização laboratorial. O cálculo da função renal utiliza a equação CKD-EPI (2021).
         </p>
       </div>
+
+      <div className="mt-8 pt-6 border-t border-gray-200">
+        <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Glossário</h4>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-y-3 gap-x-4">
+          {[
+            { term: 'AUC', desc: 'Área sobre a curva' },
+            { term: 'BIC', desc: 'Bomba de Infusão Contínua' },
+            { term: 'ClCr', desc: 'Clearance de Creatinina' },
+            { term: 'HD', desc: 'Hemodiálise' },
+            { term: 'ICS', desc: 'Infecção de Corrente Sanguínea' },
+            { term: 'IMC', desc: 'Índice de Massa Corpórea' },
+            { term: 'IM', desc: 'Intramuscular' },
+            { term: 'IC/EV', desc: 'Intravenoso/Endovenoso' },
+            { term: 'MIC', desc: 'Concentração Inibitória Mínima' },
+            { term: 'N/A', desc: 'Não se Aplica' },
+            { term: 'PAV', desc: 'Pneumonia Associada a Ventilação Mecânica' },
+            { term: 'PCA', desc: 'Peso Corporal Ajustado' },
+            { term: 'PCI', desc: 'Peso Corporal Ideal' },
+            { term: 'PCT', desc: 'Peso Corporal Total' },
+            { term: 'SNC', desc: 'Sistema Nervoso Central' },
+            { term: 'UI', desc: 'Unidade Internacionais' },
+          ].map((item) => (
+            <div key={item.term} className="flex flex-col">
+              <span className="text-[10px] font-black text-slate-700 leading-tight">{item.term}</span>
+              <span className="text-[10px] text-slate-500 leading-tight">{item.desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
