@@ -1,0 +1,5 @@
+{
+  "name": "ISCAL Digital",
+  "description": "Ferramenta de consulta rápida para profissionais de saúde da ISCAL, incluindo protocolos de antibioticoprofilaxia perioperatória e ajuste renal de antimicrobianos.",
+  "requestFramePermissions": []
+}
