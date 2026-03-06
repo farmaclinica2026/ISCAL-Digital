@@ -57,8 +57,8 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
   const [crcl, setCrcl] = useState<{
     egfrIndexed: number;
     egfrNonNormalized: number;
-    bsa: number;
-    egfrPatientBSA: number;
+    bsa: number | null;
+    egfrPatientBSA: number | null;
   } | null>(null);
 
   const [age, setAge] = useState('');
@@ -75,9 +75,8 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
     const numHeight = parseFloat(height);
     const numWeight = parseFloat(weight);
 
-    if (isNaN(numAge) || isNaN(numCreatinine) || isNaN(numHeight) || isNaN(numWeight) || 
-        numAge <= 0 || numCreatinine <= 0 || numHeight <= 0 || numWeight <= 0) {
-      setCalcError('Por favor, preencha todos os campos com valores válidos.');
+    if (isNaN(numAge) || isNaN(numCreatinine) || numAge <= 0 || numCreatinine <= 0) {
+      setCalcError('Por favor, preencha Idade, Creatinina e Gênero corretamente.');
       setCrcl(null);
       return;
     }
@@ -95,14 +94,19 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
       Math.pow(0.9938, numAge) * 
       sexFactor;
     
-    const bsa = 0.007184 * Math.pow(numHeight, 0.725) * Math.pow(numWeight, 0.425);
-    const egfrPatientBSA = egfrIndexed * (bsa / 1.73);
+    let bsa: number | null = null;
+    let egfrPatientBSA: number | null = null;
+
+    if (!isNaN(numHeight) && !isNaN(numWeight) && numHeight > 0 && numWeight > 0) {
+      bsa = 0.007184 * Math.pow(numHeight, 0.725) * Math.pow(numWeight, 0.425);
+      egfrPatientBSA = egfrIndexed * (bsa / 1.73);
+    }
     
     setCrcl({
       egfrIndexed: Math.round(egfrIndexed),
-      egfrNonNormalized: Math.round(egfrIndexed), // As per user's request: numerically equal to indexed
-      bsa: Number(bsa.toFixed(2)),
-      egfrPatientBSA: Math.round(egfrPatientBSA)
+      egfrNonNormalized: Math.round(egfrIndexed),
+      bsa: bsa ? Number(bsa.toFixed(2)) : null,
+      egfrPatientBSA: egfrPatientBSA ? Math.round(egfrPatientBSA) : null
     });
   };
 
@@ -199,11 +203,11 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
             <input type="number" value={creatinine} onChange={e => setCreatinine(e.target.value)} placeholder="Ex: 1.2" step="0.1" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Altura (cm)</label>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Altura (cm) <span className="text-[10px] text-gray-400 font-normal">(Opcional)</span></label>
             <input type="number" value={height} onChange={e => setHeight(e.target.value)} placeholder="Ex: 170" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Peso (kg)</label>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Peso (kg) <span className="text-[10px] text-gray-400 font-normal">(Opcional)</span></label>
             <input type="number" value={weight} onChange={e => setWeight(e.target.value)} placeholder="Ex: 70" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
           </div>
           <div>
@@ -238,15 +242,19 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
               <p className="text-base font-bold text-green-800">{crcl.egfrNonNormalized} <span className="text-[10px] font-normal">mL/min</span></p>
             </div>
             
-            <div className="bg-white/30 p-2 rounded-lg border border-green-100/50">
-              <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">BSA (Du Bois)</p>
-              <p className="text-base font-bold text-green-800">{crcl.bsa} <span className="text-[10px] font-normal">m²</span></p>
-            </div>
+            {crcl.bsa !== null && (
+              <div className="bg-white/30 p-2 rounded-lg border border-green-100/50">
+                <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">BSA (Du Bois)</p>
+                <p className="text-base font-bold text-green-800">{crcl.bsa} <span className="text-[10px] font-normal">m²</span></p>
+              </div>
+            )}
             
-            <div className="bg-white/30 p-2 rounded-lg border border-green-100/50 sm:col-span-2">
-              <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">eGFR para este BSA</p>
-              <p className="text-base font-bold text-green-800">{crcl.egfrPatientBSA} <span className="text-[10px] font-normal">mL/min</span></p>
-            </div>
+            {crcl.egfrPatientBSA !== null && (
+              <div className="bg-white/30 p-2 rounded-lg border border-green-100/50 sm:col-span-2">
+                <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">eGFR para este BSA</p>
+                <p className="text-base font-bold text-green-800">{crcl.egfrPatientBSA} <span className="text-[10px] font-normal">mL/min</span></p>
+              </div>
+            )}
           </div>
           <p className="text-[10px] text-green-600 mt-4 text-center italic">
             * O ajuste de dose sugerido abaixo utiliza o valor normalizado (1.73 m²).
