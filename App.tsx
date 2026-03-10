@@ -21,13 +21,8 @@ const App: React.FC = () => {
     window.addEventListener('popstate', handlePopState);
     
     // Initialize history state if it's the first load
-    const hash = window.location.hash.replace('#', '') as AppView;
-    const isValidView = ['home', 'prophylaxis', 'renal'].includes(hash);
-
     if (!window.history.state) {
-      const initialView = isValidView ? hash : 'home';
-      window.history.replaceState({ view: initialView }, '');
-      setView(initialView);
+      window.history.replaceState({ view: 'home' }, '');
     } else if (window.history.state.view) {
       setView(window.history.state.view);
     }

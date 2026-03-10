@@ -56,6 +56,7 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [crcl, setCrcl] = useState<{
     egfrIndexed: number;
+    egfrNonNormalized: number;
     bsa: number | null;
     egfrPatientBSA: number | null;
   } | null>(null);
@@ -103,6 +104,7 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
     
     setCrcl({
       egfrIndexed: Math.round(egfrIndexed),
+      egfrNonNormalized: Math.round(egfrIndexed),
       bsa: bsa ? Number(bsa.toFixed(2)) : null,
       egfrPatientBSA: egfrPatientBSA ? Math.round(egfrPatientBSA) : null
     });
@@ -222,7 +224,7 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
               <Eraser className="w-4 h-4" /> Limpar
             </button>
             <button onClick={handleCalculateCrcl} className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-colors shadow text-sm">
-              <Calculator className="w-4 h-4" /> Calcular ClCr
+              <Calculator className="w-4 h-4" /> Calcular TFGe
             </button>
         </div>
       </div>
@@ -230,25 +232,27 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
       {crcl !== null && (
         <div className="mb-6 bg-green-50 border border-green-200 text-green-900 rounded-xl p-5 animate-in fade-in">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className={`bg-white p-4 rounded-lg border border-green-200 ring-2 ring-green-500 ring-offset-2 shadow-sm text-center ${crcl.bsa === null ? 'col-span-1 sm:col-span-2' : ''}`}>
-              <p className="text-[10px] sm:text-[11px] font-bold text-green-700 uppercase mb-1 leading-tight">eGFR (Normalizado)</p>
+            <div className="bg-white p-4 rounded-lg border border-green-200 ring-2 ring-green-500 ring-offset-2 col-span-1 sm:col-span-2 shadow-sm text-center">
+              <p className="text-[10px] sm:text-[11px] font-bold text-green-700 uppercase mb-1 leading-tight">eGFR normalizado para um BSA de 1,73 m²</p>
               <p className="text-2xl sm:text-3xl font-black">{crcl.egfrIndexed} <span className="text-xs sm:text-sm font-normal">mL/min/1.73m²</span></p>
-              <p className="text-[9px] text-gray-400 mt-1 uppercase font-medium">Usar para ajuste de dose</p>
+            </div>
+            
+            <div className="bg-white/30 p-2 rounded-lg border border-green-100/50">
+              <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">eGFR sem normalização (BSA 1.73)</p>
+              <p className="text-base font-bold text-green-800">{crcl.egfrNonNormalized} <span className="text-[10px] font-normal">mL/min</span></p>
             </div>
             
             {crcl.bsa !== null && (
-              <div className="bg-white p-4 rounded-lg border border-green-200 shadow-sm text-center">
-                <p className="text-[10px] sm:text-[11px] font-bold text-gray-500 uppercase mb-1 leading-tight">BSA (Du Bois)</p>
-                <p className="text-2xl sm:text-3xl font-black text-gray-700">{crcl.bsa} <span className="text-xs sm:text-sm font-normal">m²</span></p>
-                <p className="text-[9px] text-gray-400 mt-1 uppercase font-medium">Superfície Corporal</p>
+              <div className="bg-white/30 p-2 rounded-lg border border-green-100/50">
+                <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">BSA (Du Bois)</p>
+                <p className="text-base font-bold text-green-800">{crcl.bsa} <span className="text-[10px] font-normal">m²</span></p>
               </div>
             )}
             
             {crcl.egfrPatientBSA !== null && (
-              <div className="bg-white/40 p-3 rounded-lg border border-green-100/50 sm:col-span-2 text-center">
-                <p className="text-[10px] font-bold text-green-600 uppercase mb-0.5 leading-tight">eGFR Absoluto (Não Normalizado)</p>
-                <p className="text-xl font-bold text-green-800">{crcl.egfrPatientBSA} <span className="text-xs font-normal">mL/min</span></p>
-                <p className="text-[9px] text-green-600/70 mt-0.5">Valor real para o tamanho do paciente</p>
+              <div className="bg-white/30 p-2 rounded-lg border border-green-100/50 sm:col-span-2">
+                <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">eGFR para este BSA</p>
+                <p className="text-base font-bold text-green-800">{crcl.egfrPatientBSA} <span className="text-[10px] font-normal">mL/min</span></p>
               </div>
             )}
           </div>

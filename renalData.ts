@@ -108,7 +108,7 @@ export const renalDoses: RenalDose[] = [
     attackDose: '2,5g',
     normalDose: '2,5g 8/8h',
     crcl30_50: '1,25g 12/12h',
-    crcl_30: '940mg 24/24h',
+    crcl_30: '94mg 24/24h',
     dialysis: '625mg após cada sessão de HD',
     notes: 'Se restrição de volume: 40mg/mL ceftazidima + 10mg/mL avibactam; Prescrição em dose composta 2,5g = 1 frasco; Monitorar função renal;'
   },
@@ -250,7 +250,7 @@ export const renalDoses: RenalDose[] = [
     crcl30_50: 'Não requer ajuste',
     crcl_30: 'Não requer ajuste',
     dialysis: 'Não requer ajuste',
-    notes: 'Bolsa pronta para uso; Monitorar interações medicamentosas graves documentadas;'
+    notes: 'Bolsa pronta para uso; Monitorar associações interações medicamentosas graves documentadas;'
   },
   {
     drug: 'Meropenem',
@@ -360,7 +360,7 @@ export const renalDoses: RenalDose[] = [
     crcl30_50: '15-20mg/kg 24/24h',
     crcl_30: '7,5mg/kg 24/24h',
     dialysis: 'Dose de ataque normal. Manutenção: 7,5-10mg/kg após cada sessão de HD a cada 3 dias ou monitorar nível sérico',
-    notes: 'Correr em BIC; Monitorar nível sérico > AUC/MIC: 400-600; Se restrição de volume: 10mg/mL; Muitas interações medicamentosas consolidadas, monitorar; A via intravenosa é ineficaz no tratamento da infecção por C. difficile. A via oral é ineficaz para o tratamento de infecções sistêmicas;'
+    notes: 'Correr em BIC; Monitorar nível sérico > AUC/MIC: 400-600mg/L; Se restrição de volume: 10mg/mL; Muitas interações medicamentosas consolidadas, monitorar; A via intravenosa é ineficaz no tratamento da infecção por C. difficile. A via oral é ineficaz para o tratamento de infecções sistêmicas;'
   },
   {
     drug: 'Anfotericina B desoxicolato',

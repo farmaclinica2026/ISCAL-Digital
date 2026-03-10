@@ -384,7 +384,7 @@ export const protocols: Protocol[] = [
   {
     id: 'neuro-2',
     category: 'Neurológica',
-    procedure: 'Laminectomia ou outras cirurgias de coluna com implantes ou se cirurgia longa / vários níveis',
+    procedure: 'Laminectomia or outras cirurgias de coluna with implantes ou se cirurgia longa / vários níveis',
     antibiotic: 'Cefuroxima',
     inductionDose: '1,5g',
     intraOp: '750mg 4/4h',
@@ -410,6 +410,16 @@ export const protocols: Protocol[] = [
     intraOp: '1g 4/4h',
     duration: '24h',
     postOpInterval: '1,5g 12/12h'
+  },
+  {
+    id: 'neuro-5',
+    category: 'Neurológica',
+    procedure: 'Cisto pilonidal, plicoma',
+    antibiotic: 'Não indicado',
+    inductionDose: '-',
+    intraOp: '-',
+    duration: '-',
+    postOpInterval: '-'
   },
   {
     id: 'neuro-6',
@@ -940,7 +950,7 @@ export const protocols: Protocol[] = [
   {
     id: 'vasc-5',
     category: 'Vascular',
-    procedure: 'Fístula arteriovenosa com próteses',
+    procedure: 'Fístula arteriovenosa with próteses',
     antibiotic: 'Cefazolina',
     inductionDose: '2g',
     intraOp: '-',
