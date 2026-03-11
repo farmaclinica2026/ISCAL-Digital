@@ -99,13 +99,25 @@ const ProphylaxisSection: React.FC<ProphylaxisSectionProps> = ({ onBack }) => {
             />
           </div>
 
+          {/* Notas de Categoria */}
           {selectedCategory !== 'Todos' && categoryNotes[selectedCategory] && (
-            <div className="p-4 bg-amber-50 border border-amber-100 rounded-xl flex gap-3 mb-4 animate-in fade-in">
-              <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0" />
-              <p className="text-xs text-amber-900 leading-relaxed italic whitespace-pre-line">
-                {categoryNotes[selectedCategory]}
-              </p>
-            </div>
+            (() => {
+              const isCardiac = selectedCategory === 'Cardíaca';
+              return (
+                <div className={`p-4 rounded-xl flex gap-3 mb-4 animate-in fade-in border ${
+                  isCardiac 
+                    ? 'bg-red-50 border-red-200 ring-2 ring-red-500 ring-offset-2' 
+                    : 'bg-amber-50 border-amber-100'
+                }`}>
+                  <AlertCircle className={`w-5 h-5 flex-shrink-0 ${isCardiac ? 'text-red-600' : 'text-amber-600'}`} />
+                  <p className={`text-xs leading-relaxed italic whitespace-pre-line font-bold ${
+                    isCardiac ? 'text-red-900' : 'text-amber-900'
+                  }`}>
+                    {categoryNotes[selectedCategory]}
+                  </p>
+                </div>
+              );
+            })()
           )}
 
           <ProtocolTable protocols={filteredProtocols} />
