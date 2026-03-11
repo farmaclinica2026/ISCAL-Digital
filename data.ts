@@ -1000,7 +1000,7 @@ export const protocols: Protocol[] = [
 ];
 
 export const categoryNotes: Record<string, string> = {
-  'Cardíaca': 'Obs.: Se paciente internado há mais de 5 dias realizar como antibiótico profilático: Teicoplanina 6mg/Kg/dia - Cefuroxima 1,5g',
+  'Cardíaca': 'Obs.: Se paciente internado há mais de 5 dias realizar como antibiótico profilático: Teicoplanina 6mg/Kg/dia + Cefuroxima 1,5g',
   'Gastrointestinal': '*Preparo intestinal mecânico: Neomicina 1g + Metronidazol 1g via oral as 13,14 e 23h do dia anterior\n\n***Alto risco:\n• colangiografia intra-operatória\n• vazamento bile\n• colecistite aguda\n• icterícia\n• gravidez\n• conversão para cirurgia aberta',
   'Neurológica': 'Obs: Se paciente internado há mais de 5 dias realizar como antibiótico profilático Teicoplanina 6mg/Kg/dia.',
   'Ortopédica': 'Obs.: Se paciente internado há mais de 5 dias realizar como antibiótico profilático Teicoplanina 6mg/kg/dia.',
