@@ -29,7 +29,7 @@ export const renalDoses: RenalDose[] = [
     normalDose: '1-2g a cada 4-6h',
     crcl30_50: '1-2g a cada 6-8h',
     crcl_30: '1-2g a cada 8-12h',
-    dialysis: '1-2g 12/12h + após cada sessão de HD',
+    dialysis: '1-2g 12/12h + 1g ou 2g após cada sessão de HD',
     notes: 'Se restrição de volume: 30mg/mL;'
   },
   {
