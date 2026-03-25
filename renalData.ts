@@ -108,7 +108,7 @@ export const renalDoses: RenalDose[] = [
     attackDose: '2,5g',
     normalDose: '2,5g 8/8h',
     crcl30_50: '1,25g 12/12h',
-    crcl_30: '94mg 24/24h',
+    crcl_30: '1,25g 24/24h',
     dialysis: '625mg após cada sessão de HD',
     notes: 'Se restrição de volume: 40mg/mL ceftazidima + 10mg/mL avibactam; Prescrição em dose composta 2,5g = 1 frasco; Monitorar função renal;'
   },
