@@ -166,7 +166,7 @@ export const renalDoses: RenalDose[] = [
     drug: 'Daptomicina',
     category: 'antibiotic',
     attackDose: 'N/A',
-    normalDose: '4-6mg/kg 24/24h (10-12mg/kg 24/24h para endocardite/bacteremia)',
+    normalDose: '4-6mg/kg 24/24h\n(10-12mg/kg 24/24h para endocardite/bacteremia)',
     crcl30_50: '10-12mg/kg 48/48h',
     crcl_30: '10-12mg/kg 48/48h',
     dialysis: '4-6mg/kg 48/48h + após cada sessão de HD',

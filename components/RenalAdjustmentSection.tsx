@@ -44,12 +44,55 @@ const CATEGORY_OPTIONS = [
   { value: 'antiviral', label: 'Antivirais' },
 ];
 
-const DoseItem = ({ label, value, isHighlighted }: { label: string, value: string, isHighlighted: boolean }) => (
-  <div className={`space-y-1 p-3 rounded-lg transition-all ${isHighlighted ? 'bg-green-100 ring-2 ring-green-500' : 'bg-slate-50'}`}>
-    <p className="text-xs font-bold text-gray-400 uppercase">{label}</p>
-    <p className={`text-sm font-medium ${isHighlighted ? 'text-green-900 font-bold' : 'text-gray-800'}`}>{value}</p>
-  </div>
-);
+const DoseItem = ({ label, value, isHighlighted, weight }: { label: string, value: string, isHighlighted: boolean, weight: string }) => {
+  const calculatedDoses = useMemo(() => {
+    const weightNum = parseFloat(weight);
+    if (isNaN(weightNum) || weightNum <= 0) return null;
+
+    // Regex to match patterns like "15-20mg/kg" or "5mg/kg" or "0,7-1mg/kg"
+    const regex = /(\d+(?:,\d+)?)(?:-(\d+(?:,\d+)?))?\s*(m?g\/kg)/gi;
+    const matches = [...value.matchAll(regex)];
+    if (matches.length === 0) return null;
+
+    return matches.map(match => {
+      const minVal = parseFloat(match[1].replace(',', '.'));
+      const maxVal = match[2] ? parseFloat(match[2].replace(',', '.')) : null;
+      const unit = match[3].toLowerCase();
+      const baseUnit = unit.includes('mg') ? 'mg' : 'g';
+
+      const minDose = minVal * weightNum;
+      const maxDose = maxVal ? maxVal * weightNum : null;
+
+      const formatNum = (num: number) => {
+        if (num >= 1000 && baseUnit === 'mg') {
+          return `${(num / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 2 })} g`;
+        }
+        return `${num.toLocaleString('pt-BR', { maximumFractionDigits: 0 })} ${baseUnit}`;
+      };
+
+      const result = maxDose ? `${formatNum(minDose)} - ${formatNum(maxDose)}` : formatNum(minDose);
+      return { original: match[0], calculated: result };
+    });
+  }, [value, weight]);
+
+  return (
+    <div className={`space-y-1 p-3 rounded-lg transition-all ${isHighlighted ? 'bg-green-100 ring-2 ring-green-500' : 'bg-slate-50'}`}>
+      <p className="text-xs font-bold text-gray-400 uppercase">{label}</p>
+      <p className={`text-sm font-medium whitespace-pre-line ${isHighlighted ? 'text-green-900 font-bold' : 'text-gray-800'}`}>{value}</p>
+      {calculatedDoses && calculatedDoses.length > 0 && (
+        <div className="mt-2 pt-2 border-t border-gray-200/50">
+          <p className="text-[10px] font-black text-green-700 uppercase mb-1">Dose Calculada ({weight}kg):</p>
+          {calculatedDoses.map((d, idx) => (
+            <div key={idx} className="flex items-center gap-2">
+              <span className="text-[10px] text-gray-400 font-medium">{d.original}:</span>
+              <span className="text-sm font-black text-green-600">{d.calculated}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack }) => {
   const [search, setSearch] = useState('');
@@ -325,8 +368,8 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
 
                 <div className="p-5 space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                     <DoseItem label="Dose de Ataque" value={item.attackDose || 'N/A'} isHighlighted={false} />
-                     <DoseItem label="POSOLOGIA ClCr >50mL/min" value={item.normalDose} isHighlighted={highlightedCategory === 'normalDose'} />
+                     <DoseItem label="Dose de Ataque" value={item.attackDose || 'N/A'} isHighlighted={false} weight={weight} />
+                     <DoseItem label="POSOLOGIA ClCr >50mL/min" value={item.normalDose} isHighlighted={highlightedCategory === 'normalDose'} weight={weight} />
                   </div>
 
                   <div className="pt-2 border-t border-gray-100">
@@ -334,9 +377,9 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
                       AJUSTE DE DOSE EM INSUFICIÊNCIA RENAL
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                       <DoseItem label="ClCr 30-50mL/min" value={item.crcl30_50} isHighlighted={highlightedCategory === 'crcl30_50'} />
-                       <DoseItem label="ClCr < 30 mL/min sem hemodiálise" value={item.crcl_30} isHighlighted={highlightedCategory === 'crcl_30'} />
-                       <DoseItem label="Hemodiálise" value={item.dialysis} isHighlighted={false} />
+                       <DoseItem label="ClCr 30-50mL/min" value={item.crcl30_50} isHighlighted={highlightedCategory === 'crcl30_50'} weight={weight} />
+                       <DoseItem label="ClCr < 30 mL/min sem hemodiálise" value={item.crcl_30} isHighlighted={highlightedCategory === 'crcl_30'} weight={weight} />
+                       <DoseItem label="Hemodiálise" value={item.dialysis} isHighlighted={false} weight={weight} />
                     </div>
                   </div>
                 </div>
