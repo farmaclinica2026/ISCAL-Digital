@@ -326,10 +326,10 @@ export const renalDoses: RenalDose[] = [
     drug: 'Sulfametoxazol + trimetoprim',
     category: 'antibiotic',
     attackDose: 'N/A',
-    normalDose: '8-10mg/kg/dia a cada 8-12h',
-    crcl30_50: '4-5mg/kg/dia a cada 8-12h',
-    crcl_30: '4-5mg/kg/dia a cada 8-12h',
-    dialysis: '4-5mg/kg/dia a cada 12h',
+    normalDose: '8-10mg/kg/dia (dose total diária) divididos a cada 8-12h',
+    crcl30_50: '4-5mg/kg/dia (dose total diária) divididos a cada 8-12h',
+    crcl_30: '4-5mg/kg/dia (dose total diária) divididos a cada 8-12h',
+    dialysis: '4-5mg/kg/dia (dose total diária) divididos a cada 12h',
     notes: 'Prescrição em dose composta 400mg/80mg = 1 ampola; As recomendações de dose baseadas no peso são referentes ao componente TRIMETOPRIM. IMC ≥ 30kg/m²: peso corporal ajustado; Incompatível em Y com Insulina Regular em BIC, usar acessos distintos.'
   },
   {
@@ -360,7 +360,7 @@ export const renalDoses: RenalDose[] = [
     crcl30_50: '15-20mg/kg 24/24h',
     crcl_30: '7,5mg/kg 24/24h',
     dialysis: 'Dose de ataque normal. Manutenção: 7,5-10mg/kg após cada sessão de HD a cada 3 dias ou monitorar nível sérico',
-    notes: 'Correr em BIC; Monitorar nível sérico > AUC/MIC: 400-600mg/L; Se restrição de volume: 10mg/mL; Muitas interações medicamentosas consolidadas, monitorar; A via intravenosa é ineficaz no tratamento da infecção por C. difficile. A via oral é ineficaz para o tratamento de infecções sistêmicas;'
+    notes: 'Correr em BIC; Monitorar nível sérico > AUC/MIC: 400-600; Se restrição de volume: 10mg/mL; Muitas interações medicamentosas consolidadas, monitorar; A via intravenosa é ineficaz no tratamento da infecção por C. difficile. A via oral é ineficaz para o tratamento de infecções sistêmicas;'
   },
   {
     drug: 'Anfotericina B desoxicolato',

@@ -147,7 +147,7 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
     
     setCrcl({
       egfrIndexed: Math.round(egfrIndexed),
-      egfrNonNormalized: Math.round(egfrIndexed),
+      egfrNonNormalized: egfrPatientBSA ? Math.round(egfrPatientBSA) : Math.round(egfrIndexed),
       bsa: bsa ? Number(bsa.toFixed(2)) : null,
       egfrPatientBSA: egfrPatientBSA ? Math.round(egfrPatientBSA) : null
     });
@@ -238,20 +238,20 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Idade (anos)</label>
-            <input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="Ex: 65" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
+            <label htmlFor="age-input" className="block text-xs font-medium text-gray-600 mb-1">Idade (anos)</label>
+            <input id="age-input" type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="Ex: 65" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Creatinina (mg/dL)</label>
-            <input type="number" value={creatinine} onChange={e => setCreatinine(e.target.value)} placeholder="Ex: 1.2" step="0.1" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
+            <label htmlFor="creatinine-input" className="block text-xs font-medium text-gray-600 mb-1">Creatinina (mg/dL)</label>
+            <input id="creatinine-input" type="number" value={creatinine} onChange={e => setCreatinine(e.target.value)} placeholder="Ex: 1.2" step="0.1" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Altura (cm) <span className="text-[10px] text-gray-400 font-normal">(Opcional)</span></label>
-            <input type="number" value={height} onChange={e => setHeight(e.target.value)} placeholder="Ex: 170" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
+            <label htmlFor="height-input" className="block text-xs font-medium text-gray-600 mb-1">Altura (cm) <span className="text-[10px] text-gray-400 font-normal">(Opcional)</span></label>
+            <input id="height-input" type="number" value={height} onChange={e => setHeight(e.target.value)} placeholder="Ex: 170" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Peso (kg) <span className="text-[10px] text-gray-400 font-normal">(Opcional)</span></label>
-            <input type="number" value={weight} onChange={e => setWeight(e.target.value)} placeholder="Ex: 70" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
+            <label htmlFor="weight-input" className="block text-xs font-medium text-gray-600 mb-1">Peso (kg) <span className="text-[10px] text-gray-400 font-normal">(Opcional)</span></label>
+            <input id="weight-input" type="number" value={weight} onChange={e => setWeight(e.target.value)} placeholder="Ex: 70" className="w-full p-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-green-500" />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Gênero</label>
@@ -276,27 +276,21 @@ const RenalAdjustmentSection: React.FC<RenalAdjustmentSectionProps> = ({ onBack 
         <div className="mb-6 bg-green-50 border border-green-200 text-green-900 rounded-xl p-5 animate-in fade-in">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white p-4 rounded-lg border border-green-200 ring-2 ring-green-500 ring-offset-2 col-span-1 sm:col-span-2 shadow-sm text-center">
-              <p className="text-[10px] sm:text-[11px] font-bold text-green-700 uppercase mb-1 leading-tight">eGFR normalizado para um BSA de 1,73 m²</p>
+              <p className="text-[10px] sm:text-[11px] font-bold text-green-700 uppercase mb-1 leading-tight">TFGe Normalizada (para 1,73m²)</p>
               <p className="text-2xl sm:text-3xl font-black">{crcl.egfrIndexed} <span className="text-xs sm:text-sm font-normal">mL/min/1.73m²</span></p>
             </div>
             
-            <div className="bg-white/30 p-2 rounded-lg border border-green-100/50">
-              <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">eGFR sem normalização (BSA 1.73)</p>
-              <p className="text-base font-bold text-green-800">{crcl.egfrNonNormalized} <span className="text-[10px] font-normal">mL/min</span></p>
-            </div>
-            
             {crcl.bsa !== null && (
-              <div className="bg-white/30 p-2 rounded-lg border border-green-100/50">
-                <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">BSA (Du Bois)</p>
-                <p className="text-base font-bold text-green-800">{crcl.bsa} <span className="text-[10px] font-normal">m²</span></p>
-              </div>
-            )}
-            
-            {crcl.egfrPatientBSA !== null && (
-              <div className="bg-white/30 p-2 rounded-lg border border-green-100/50 sm:col-span-2">
-                <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">eGFR para este BSA</p>
-                <p className="text-base font-bold text-green-800">{crcl.egfrPatientBSA} <span className="text-[10px] font-normal">mL/min</span></p>
-              </div>
+              <>
+                <div className="bg-white/30 p-2 rounded-lg border border-green-100/50">
+                  <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">BSA (Du Bois)</p>
+                  <p className="text-base font-bold text-green-800">{crcl.bsa} <span className="text-[10px] font-normal">m²</span></p>
+                </div>
+                <div className="bg-white/30 p-2 rounded-lg border border-green-100/50">
+                  <p className="text-[9px] font-bold text-green-600/70 uppercase mb-0.5 leading-tight">TFGe Absoluta (para este paciente)</p>
+                  <p className="text-base font-bold text-green-800">{crcl.egfrNonNormalized} <span className="text-[10px] font-normal">mL/min</span></p>
+                </div>
+              </>
             )}
           </div>
           <p className="text-[10px] text-green-600 mt-4 text-center italic">

@@ -184,10 +184,10 @@ export const protocols: Protocol[] = [
     category: 'Gastrointestinal',
     procedure: 'Apendicectomia perfurada / abcesso',
     antibiotic: 'Ceftriaxona + Metronidazol',
-    inductionDose: '-',
+    inductionDose: '1g (Cef) + 500mg (Metro)',
     intraOp: '-',
     duration: '5 dias',
-    postOpInterval: '-'
+    postOpInterval: '1g 12/12h (Cef) + 500mg 8/8h (Metro)'
   },
   {
     id: 'gastro-5',
@@ -384,7 +384,7 @@ export const protocols: Protocol[] = [
   {
     id: 'neuro-2',
     category: 'Neurológica',
-    procedure: 'Laminectomia or outras cirurgias de coluna with implantes ou se cirurgia longa / vários níveis',
+    procedure: 'Laminectomia ou outras cirurgias de coluna com implantes ou se cirurgia longa / vários níveis',
     antibiotic: 'Cefuroxima',
     inductionDose: '1,5g',
     intraOp: '750mg 4/4h',
@@ -409,17 +409,7 @@ export const protocols: Protocol[] = [
     inductionDose: '2g',
     intraOp: '1g 4/4h',
     duration: '24h',
-    postOpInterval: '1,5g 12/12h'
-  },
-  {
-    id: 'neuro-5',
-    category: 'Neurológica',
-    procedure: 'Cisto pilonidal, plicoma',
-    antibiotic: 'Não indicado',
-    inductionDose: '-',
-    intraOp: '-',
-    duration: '-',
-    postOpInterval: '-'
+    postOpInterval: '1g 8/8h'
   },
   {
     id: 'neuro-6',
@@ -972,9 +962,9 @@ export const protocols: Protocol[] = [
     category: 'Vascular',
     procedure: 'Implante de shunt temporário ou implante de cateter de longa permanência',
     antibiotic: 'Cefazolina',
-    inductionDose: '-',
-    intraOp: '-',
-    duration: '-',
+    inductionDose: '2g',
+    intraOp: '1g 4/4h',
+    duration: 'Intra-operatório',
     postOpInterval: '-'
   },
   {
