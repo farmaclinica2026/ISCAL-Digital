@@ -7,7 +7,9 @@
     <title>ISCAL Digital - Protocolos</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" href="/pwa-192x192.svg">
-    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00579D">
+    <link rel="stylesheet" href="/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,5 +17,15 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
+
+    <!-- Botão de Atualização do PWA (Surgirá no canto inferior esquerdo caso haja uma nova versão instalada) -->
+    <button id="btnAtualizar" style="display:none;" class="fixed bottom-6 left-6 z-50 bg-[#00579D] hover:bg-[#004680] text-white font-bold text-[11px] px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 cursor-pointer border border-white/20 select-none animate-bounce uppercase tracking-wider">
+      <svg class="w-4 h-4 animate-spin" style="animation-duration: 3s;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17"></path>
+      </svg>
+      Nova versão disponível — atualizar
+    </button>
+
+    <script src="/app.js"></script>
   </body>
 </html>
