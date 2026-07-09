@@ -4,11 +4,13 @@ import { FileText, ChevronDown, ChevronUp, ShieldCheck, AlertTriangle, Check, X 
 
 interface ConsentModalProps {
   onAccept: () => void;
+  isReviewMode?: boolean;
+  onClose?: () => void;
 }
 
-const ConsentModal: React.FC<ConsentModalProps> = ({ onAccept }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [hasChecked, setHasChecked] = useState(false);
+const ConsentModal: React.FC<ConsentModalProps> = ({ onAccept, isReviewMode = false, onClose }) => {
+  const [isExpanded, setIsExpanded] = useState(isReviewMode);
+  const [hasChecked, setHasChecked] = useState(isReviewMode);
   const [declined, setDeclined] = useState(false);
 
   const handleAccept = () => {
@@ -59,6 +61,15 @@ const ConsentModal: React.FC<ConsentModalProps> = ({ onAccept }) => {
       >
         {/* Header */}
         <div className="bg-gradient-to-r from-[#00579D] to-[#004680] p-6 text-white text-center relative">
+          {isReviewMode && onClose && (
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+              title="Fechar"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
           <div className="w-12 h-12 bg-white/15 rounded-2xl flex items-center justify-center mx-auto mb-3">
             <ShieldCheck className="w-6 h-6" />
           </div>
@@ -130,39 +141,52 @@ const ConsentModal: React.FC<ConsentModalProps> = ({ onAccept }) => {
         </div>
 
         {/* Checkbox and Action Footer */}
-        <div className="p-6 bg-slate-50 border-t border-slate-100 space-y-4">
-          <label className="flex items-start gap-3 cursor-pointer group select-none">
-            <div className="relative mt-0.5">
-              <input
-                type="checkbox"
-                checked={hasChecked}
-                onChange={(e) => setHasChecked(e.target.checked)}
-                className="sr-only"
-              />
-              <div className={`w-5 h-5 rounded-md border transition-all flex items-center justify-center ${hasChecked ? 'bg-[#00579D] border-[#00579D]' : 'bg-white border-slate-300 group-hover:border-slate-400'}`}>
-                {hasChecked && <Check className="w-3.5 h-3.5 text-white stroke-[3px]" />}
+        <div className="p-6 bg-slate-50 border-t border-slate-100">
+          {isReviewMode ? (
+            <div className="flex justify-center">
+              <button
+                onClick={onClose}
+                className="w-full py-3 bg-[#00579D] hover:bg-[#004680] text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                Fechar Visualização
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <label className="flex items-start gap-3 cursor-pointer group select-none">
+                <div className="relative mt-0.5">
+                  <input
+                    type="checkbox"
+                    checked={hasChecked}
+                    onChange={(e) => setHasChecked(e.target.checked)}
+                    className="sr-only"
+                  />
+                  <div className={`w-5 h-5 rounded-md border transition-all flex items-center justify-center ${hasChecked ? 'bg-[#00579D] border-[#00579D]' : 'bg-white border-slate-300 group-hover:border-slate-400'}`}>
+                    {hasChecked && <Check className="w-3.5 h-3.5 text-white stroke-[3px]" />}
+                  </div>
+                </div>
+                <span className="text-xs text-gray-700 font-semibold leading-relaxed">
+                  Declaro que li, compreendi e concordo com os termos de uso desta ferramenta.
+                </span>
+              </label>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <button
+                  onClick={() => setDeclined(true)}
+                  className="w-full sm:w-1/3 py-3 border border-slate-300 hover:bg-slate-100 active:scale-95 rounded-2xl text-xs font-bold text-gray-600 transition-all uppercase tracking-wider"
+                >
+                  Não aceito
+                </button>
+                <button
+                  onClick={handleAccept}
+                  disabled={!hasChecked}
+                  className={`w-full sm:w-2/3 py-3 rounded-2xl text-xs font-bold text-white uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 ${hasChecked ? 'bg-gradient-to-r from-[#00579D] to-[#004680] hover:shadow-lg' : 'bg-slate-300 cursor-not-allowed shadow-none'}`}
+                >
+                  Aceitar e continuar
+                </button>
               </div>
             </div>
-            <span className="text-xs text-gray-700 font-semibold leading-relaxed">
-              Declaro que li, compreendi e concordo com os termos de uso desta ferramenta.
-            </span>
-          </label>
-
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <button
-              onClick={() => setDeclined(true)}
-              className="w-full sm:w-1/3 py-3 border border-slate-300 hover:bg-slate-100 active:scale-95 rounded-2xl text-xs font-bold text-gray-600 transition-all uppercase tracking-wider"
-            >
-              Não aceito
-            </button>
-            <button
-              onClick={handleAccept}
-              disabled={!hasChecked}
-              className={`w-full sm:w-2/3 py-3 rounded-2xl text-xs font-bold text-white uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 ${hasChecked ? 'bg-gradient-to-r from-[#00579D] to-[#004680] hover:shadow-lg' : 'bg-slate-300 cursor-not-allowed shadow-none'}`}
-            >
-              Aceitar e continuar
-            </button>
-          </div>
+          )}
         </div>
       </motion.div>
     </div>

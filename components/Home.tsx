@@ -8,9 +8,10 @@ interface HomeProps {
   onNavigate: (view: AppView) => void;
   canInstall?: boolean;
   onInstall?: () => void;
+  onShowConsent?: () => void;
 }
 
-const Home: React.FC<HomeProps> = ({ onNavigate, canInstall, onInstall }) => {
+const Home: React.FC<HomeProps> = ({ onNavigate, canInstall, onInstall, onShowConsent }) => {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 pb-10">
       {/* Header SUS Style */}
@@ -108,23 +109,29 @@ const Home: React.FC<HomeProps> = ({ onNavigate, canInstall, onInstall }) => {
           </button>
         </motion.div>
 
-        {/* Info Card */}
-        <motion.div 
+        {/* Info Card - Interativo para acessar o Termo de Ciência */}
+        <motion.button 
+          onClick={onShowConsent}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-8 bg-[#00579D]/5 border border-[#00579D]/10 rounded-3xl p-6 flex items-start gap-4"
+          className="mt-8 w-full bg-[#00579D]/5 hover:bg-[#00579D]/10 border border-[#00579D]/10 hover:border-[#00579D]/20 rounded-3xl p-6 flex items-start gap-4 text-left transition-all hover:scale-[1.01] active:scale-[0.99] group cursor-pointer"
         >
-          <Info className="w-5 h-5 text-[#00579D] flex-shrink-0 mt-0.5" />
-          <div>
+          <Info className="w-5 h-5 text-[#00579D] flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+          <div className="flex-1">
             <p className="text-[11px] text-[#00579D]/80 leading-relaxed font-medium">
               Este aplicativo é uma ferramenta de consulta rápida para profissionais de saúde, baseado em diretrizes institucionais e bases de dados de referência. Uso exclusivo profissional.
             </p>
-            <p className="mt-3 text-[11px] text-[#00579D] font-bold uppercase tracking-wide">
-              © ISCAL – Irmandade da Santa Casa de Londrina
-            </p>
+            <div className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <span className="text-[11px] text-[#00579D] font-bold uppercase tracking-wide">
+                © ISCAL – Irmandade da Santa Casa de Londrina
+              </span>
+              <span className="text-[10px] text-[#00579D] font-black uppercase tracking-wider underline flex items-center gap-1 group-hover:text-[#004680] transition-colors self-start sm:self-auto">
+                Ver Termo de Ciência
+              </span>
+            </div>
           </div>
-        </motion.div>
+        </motion.button>
       </main>
     </div>
   );
