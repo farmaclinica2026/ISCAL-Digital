@@ -1,7 +1,8 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { AlertCircle, Home, ShieldAlert, Info } from 'lucide-react';
 import { protocols, categoryNotes } from '../data';
+import { registrarAcessoAntibioticoprofilaxia } from '../analytics';
 import SearchBar from './SearchBar';
 import ProtocolTable from './ProtocolTable';
 import CategoryFilter from './CategoryFilter';
@@ -17,6 +18,14 @@ const ProphylaxisSection: React.FC<ProphylaxisSectionProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<LocalTabType>('adults');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const hasRegisteredAccess = useRef(false);
+
+  useEffect(() => {
+    if (!hasRegisteredAccess.current) {
+      hasRegisteredAccess.current = true;
+      registrarAcessoAntibioticoprofilaxia();
+    }
+  }, []);
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(protocols.map(p => p.category)));

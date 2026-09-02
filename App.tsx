@@ -10,7 +10,13 @@ import ConsentModal from './components/ConsentModal';
 const App: React.FC = () => {
   const [view, setView] = useState<AppView>('home');
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [consentAccepted, setConsentAccepted] = useState<boolean>(false);
+  const [consentAccepted, setConsentAccepted] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('iscal_consent_accepted') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [showConsentReview, setShowConsentReview] = useState<boolean>(false);
 
   // Handle PWA installation prompt
@@ -120,6 +126,9 @@ const App: React.FC = () => {
         {!consentAccepted && (
           <ConsentModal 
             onAccept={() => {
+              try {
+                localStorage.setItem('iscal_consent_accepted', 'true');
+              } catch {}
               setConsentAccepted(true);
             }} 
           />
